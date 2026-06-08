@@ -180,28 +180,55 @@ function drawCertificate(name,number){
 
 const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
-
-ctx.fillStyle="#fff";
+ctx.fillStyle="#FFFDF5";
 ctx.fillRect(0,0,1200,1200);
 
-ctx.strokeStyle="#0b6b3a";
-ctx.lineWidth=10;
-ctx.strokeRect(30,30,1140,1140);
+ctx.strokeStyle="#C9A227";
+ctx.lineWidth=18;
+ctx.strokeRect(25,25,1150,1150);
+
+ctx.strokeStyle="#0B6B3A";
+ctx.lineWidth=6;
+ctx.strokeRect(60,60,1080,1080);
 
 ctx.textAlign="center";
 
-ctx.fillStyle="#0b6b3a";
-ctx.font="bold 70px Arial";
-ctx.fillText("وثيقة الوفاء لبلدة عبسان الجديدة",600,180);
+ctx.fillStyle="#0B6B3A";
+ctx.font="bold 38px Arial";
+ctx.fillText("دولة فلسطين",600,120);
+
+ctx.fillText("محافظة خان يونس",600,170);
+
+ctx.font="bold 75px Arial";
+ctx.fillText("وثيقة الوفاء لبلدة عبسان الجديدة",600,290);
 
 ctx.fillStyle="#000";
-ctx.font="bold 80px Arial";
-ctx.fillText(name,600,500);
+ctx.font="bold 90px Arial";
+ctx.fillText(name,600,540);
 
-ctx.font="45px Arial";
-ctx.fillText("تقديراً لانتمائه ووفائه لبلدة عبسان الجديدة",600,650);
+ctx.font="42px Arial";
+ctx.fillText("تُمنح هذه الوثيقة تقديراً لانتمائه ووفائه",600,660);
+ctx.fillText("وحفاظه على هوية وذاكرة بلدة عبسان الجديدة",600,730);
 
-ctx.fillText("رقم الوثيقة : "+number,600,760);
+ctx.fillStyle="#C9A227";
+ctx.font="bold 52px Arial";
+ctx.fillText("AB-"+String(number).padStart(6,"0"),600,860);
+
+ctx.fillStyle="#000";
+ctx.font="36px Arial";
+ctx.fillText("رئيس المبادرة",250,1040);
+ctx.fillText("لجنة وثيقة الوفاء",950,1040);
+
+ctx.beginPath();
+ctx.arc(1000,880,90,0,Math.PI*2);
+ctx.strokeStyle="#C9A227";
+ctx.lineWidth=8;
+ctx.stroke();
+
+ctx.fillStyle="#C9A227";
+ctx.font="bold 24px Arial";
+ctx.fillText("وثيقة رسمية",1000,865);
+ctx.fillText("2026",1000,905);
 }
 
 window.downloadImage=function(){
