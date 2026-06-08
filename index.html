@@ -283,7 +283,7 @@ async function loadPeople(){
 const q = query(
 collection(db,"certificates"),
 orderBy("number","desc"),
-limit(10)
+limit(5)
 );
 
 const snapshot = await getDocs(q);
