@@ -200,7 +200,7 @@ ctx.fillText("دولة فلسطين",600,120);
 ctx.fillText("محافظة خان يونس",600,170);
 
 ctx.font="bold 75px Arial";
-ctx.fillText("وثيقة الوفاء لبلدة عبسان الجديدة",600,290);
+ctx.fillText("وثيقة الوفاء لبلدة عبسان الجديدة",600,400);
 
 ctx.fillStyle="#000";
 ctx.font="bold 90px Arial";
@@ -247,6 +247,21 @@ qrImage.src = qrUrl;
   ctx.fillStyle="#000";
 ctx.font="22px Arial";
 ctx.fillText("تحقق من الوثيقة",210,1010);
+  const logo = new Image();
+
+logo.onload = function () {
+
+    ctx.drawImage(
+        logo,
+        520,
+        180,
+        160,
+        160
+    );
+
+};
+
+logo.src = "https://raw.githubusercontent.com/aboodalda/abasan-certificate/main/FB_IMG_1780833976315.jpg";
 }
 
 window.downloadImage=function(){
