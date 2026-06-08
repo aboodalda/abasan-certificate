@@ -216,8 +216,8 @@ ctx.fillText("AB-"+String(number).padStart(6,"0"),600,860);
 
 ctx.fillStyle="#000";
 ctx.font="36px Arial";
-ctx.fillText("رئيس المبادرة",250,1040);
-ctx.fillText("لجنة وثيقة الوفاء",950,1040);
+ctx.fillText("مسؤول المبادرة",250,1040);
+ctx.fillText(" وثيقة الوفاء",950,1040);
 
 ctx.beginPath();
 ctx.arc(1000,880,90,0,Math.PI*2);
@@ -280,27 +280,43 @@ link.click();
 
 async function loadPeople(){
 
-const snapshot=await getDocs(collection(db,"certificates"));
+const q = query(
+collection(db,"certificates"),
+orderBy("number","desc"),
+limit(10)
+);
 
-document.getElementById("count").textContent=snapshot.size;
+const snapshot = await getDocs(q);
 
-let html="<h2>أصحاب الوثائق</h2>";
+let html = "<h2>آخر 5 وثائق صادرة</h2>";
 
 snapshot.forEach(doc=>{
 
-const d=doc.data();
+const d = doc.data();
 
-html+=`<div class="person">
-${d.number} - ${d.name}
-</div>`;
+html += `
+<div class="person">
+🏅 ${d.number} - ${d.name}
+</div>
+`;
 
 });
 
-document.getElementById("people").innerHTML=html;
+document.getElementById("people").innerHTML = html;
 
 }
-
-loadPeople();
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+query,
+orderBy,
+limit,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  
 
 </script>
 
