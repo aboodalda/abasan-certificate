@@ -133,10 +133,12 @@ getFirestore,
 collection,
 addDoc,
 getDocs,
+query,
+orderBy,
+limit,
 serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 const firebaseConfig = {
 apiKey: "AIzaSyCdPq65Vz8tTn76k-XWwdK50ARyvDTLNbg",
 authDomain: "abasan-certificate.firebaseapp.com",
@@ -288,6 +290,8 @@ limit(5)
 
 const snapshot = await getDocs(q);
 
+const allDocs = await getDocs(collection(db,"certificates"));
+document.getElementById("count").textContent = allDocs.size;
 let html = "<h2>آخر 5 وثائق صادرة</h2>";
 
 snapshot.forEach(doc=>{
@@ -305,17 +309,9 @@ html += `
 document.getElementById("people").innerHTML = html;
 
 }
-import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-query,
-orderBy,
-limit,
-serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+loadPeople();
+
   
 
 </script>
