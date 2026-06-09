@@ -350,46 +350,6 @@ ctx.stroke();
 
   }
 
-ctx.strokeStyle="#0B6B3A";
-ctx.font="bold 24px Arial";
-ctx.fillText("ختم رسمي",1000,865);
-ctx.fillText("عبسان الجديدة",1000,905);
-  const qrUrl =
-"https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" +
-encodeURIComponent(
-"https://aboodalda.github.io/abasan-certificate/?id=" + number
-);
-
-const qrImage = new Image();
-qrImage.crossOrigin = "anonymous";
-
-qrImage.onload = function () {
-
-ctx.drawImage(qrImage,70,730,120,120);
-
-};
-
-qrImage.src = qrUrl;
-  ctx.fillStyle="#666";
-ctx.font="18px Arial";
-ctx.fillText("تحقق من الوثيقة",130,875);
-  const logo = new Image();
-logo.crossOrigin = "anonymous";
-
-logo.onload = function () {
-
-    ctx.drawImage(
-        logo,
-        520,
-        180,
-        160,
-        160
-    );
-
-};
-
-logo.src = "https://raw.githubusercontent.com/aboodalda/abasan-certificate/main/FB_IMG_1780833976315.jpg";
-}
 
 window.downloadImage=function(){
 
