@@ -240,6 +240,7 @@ encodeURIComponent(
 );
 
 const qrImage = new Image();
+qrImage.crossOrigin = "anonymous";
 
 qrImage.onload = function () {
 
@@ -252,6 +253,7 @@ qrImage.src = qrUrl;
 ctx.font="22px Arial";
 ctx.fillText("تحقق من الوثيقة",210,1010);
   const logo = new Image();
+logo.crossOrigin = "anonymous";
 
 logo.onload = function () {
 
@@ -281,15 +283,7 @@ link.href=canvas.toDataURL();
 link.click();
 
 };
-
-async function loadPeople(){
-
-const q = query(
-collection(db,"certificates"),
-orderBy("number","desc"),
-limit(5)
-);
-function shareCertificate(){
+window.shareCertificate = function(){
 
 const text =
 "أصدرت وثيقة الوفاء لبلدة عبسان الجديدة 🇵🇸\n\nسجل اسمك الآن:";
@@ -298,10 +292,19 @@ const url =
 "https://aboodalda.github.io/abasan-certificate/";
 
 window.open(
-`https://wa.me/?text=${encodeURIComponent(text+"\n"+url)}`
+"https://wa.me/?text=" +
+encodeURIComponent(text + "\n" + url)
 );
 
-}
+};
+async function loadPeople(){
+
+const q = query(
+collection(db,"certificates"),
+orderBy("number","desc"),
+limit(5)
+);
+
   
 const snapshot = await getDocs(q);
 
