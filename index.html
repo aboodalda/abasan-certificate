@@ -185,55 +185,57 @@ function drawCertificate(name,number){
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-// خلفية
-ctx.fillStyle="#FFFDF5";
+// تنظيف
+ctx.clearRect(0,0,1200,1200);
+
+// خلفية فاتحة
+ctx.fillStyle="#FDFBF5";
 ctx.fillRect(0,0,1200,1200);
 
-// إطار أسود
+// إطار فلسطين
 ctx.strokeStyle="#000";
-ctx.lineWidth=10;
+ctx.lineWidth=12;
 ctx.strokeRect(20,20,1160,1160);
 
-// إطار أحمر
-ctx.strokeStyle="#D32020";
-ctx.lineWidth=6;
+ctx.strokeStyle="#FFFFFF";
+ctx.lineWidth=8;
 ctx.strokeRect(40,40,1120,1120);
 
-// إطار أخضر
 ctx.strokeStyle="#0B6B3A";
-ctx.lineWidth=4;
+ctx.lineWidth=8;
 ctx.strokeRect(60,60,1080,1080);
+
+ctx.strokeStyle="#D32020";
+ctx.lineWidth=6;
+ctx.strokeRect(80,80,1040,1040);
 
 ctx.textAlign="center";
 
 // شعار عبسان
 const logo = new Image();
+logo.crossOrigin="anonymous";
 
 logo.onload = function(){
 
 ctx.drawImage(
 logo,
 500,
-100,
+80,
 200,
 200
 );
 
-};
-
-logo.src="https://raw.githubusercontent.com/aboodalda/abasan-certificate/main/FB_IMG_1780833976315.jpg";
-
-// دولة فلسطين
+// فلسطين
 ctx.fillStyle="#0B6B3A";
 ctx.font="bold 42px Arial";
 ctx.fillText("دولة فلسطين",600,340);
 
 ctx.fillStyle="#000";
-ctx.font="bold 36px Arial";
+ctx.font="bold 34px Arial";
 ctx.fillText("محافظة خان يونس",600,390);
 
-// عنوان الشهادة
-ctx.font="bold 85px Arial";
+// العنوان
+ctx.font="bold 80px Arial";
 
 ctx.fillStyle="#000";
 ctx.fillText("وثيقة",250,520);
@@ -242,19 +244,39 @@ ctx.fillStyle="#D32020";
 ctx.fillText("الوفاء",520,520);
 
 ctx.fillStyle="#0B6B3A";
-ctx.fillText("لبلدة عبسان الجديدة",850,520);
+ctx.fillText("لبلدة عبسان الجديدة",860,520);
 
 // الاسم
 ctx.fillStyle="#000";
-ctx.font="bold 95px Arial";
-ctx.fillText(name,600,680);
+ctx.font="bold 90px Arial";
+ctx.fillText(name,600,660);
 
-// النص
-ctx.font="42px Arial";
+// الوصف
+ctx.font="40px Arial";
 ctx.fillText(
-"تُمنح هذه الوثيقة اعتزازاً بانتمائه ووفائه لعبسان الجديدة",
+"تُمنح هذه الوثيقة اعتزازاً بانتمائه ووفائه لبلدة عبسان الجديدة",
 600,
-760
+740
+);
+
+// رقم الوثيقة
+ctx.strokeStyle="#0B6B3A";
+ctx.lineWidth=4;
+
+ctx.strokeRect(
+360,
+810,
+480,
+90
+);
+
+ctx.fillStyle="#0B6B3A";
+ctx.font="bold 50px Arial";
+
+ctx.fillText(
+"ABASAN-2026-"+String(number).padStart(6,"0"),
+600,
+870
 );
 
 // QR
@@ -265,90 +287,92 @@ encodeURIComponent(
 );
 
 const qrImage = new Image();
+qrImage.crossOrigin="anonymous";
 
 qrImage.onload = function(){
 
 ctx.drawImage(
 qrImage,
-120,
+90,
 820,
-140,
-140
+110,
+110
 );
 
-ctx.font="26px Arial";
-ctx.fillStyle="#000";
-ctx.fillText("تحقق من الوثيقة",190,995);
+ctx.fillStyle="#555";
+ctx.font="20px Arial";
+ctx.fillText(
+"تحقق من الوثيقة",
+145,
+970
+);
 
 };
 
 qrImage.src = qrUrl;
 
-// لوحة رقم الوثيقة
-
-ctx.strokeStyle="#0B6B3A";
-ctx.lineWidth=3;
-
-ctx.strokeRect(
-410,
-835,
-380,
-80
-);
-
-ctx.fillStyle="#0B6B3A";
-ctx.font="bold 48px Arial";
-
-ctx.fillText(
-"ABASAN-"+String(number).padStart(6,"0"),
-600,
-890
-);
-
-// ختم رسمي
-
+// الختم
 ctx.beginPath();
-ctx.arc(980,885,95,0,Math.PI*2);
+ctx.arc(980,870,95,0,Math.PI*2);
 
-ctx.strokeStyle="#0B6B3A";
-ctx.lineWidth=6;
+ctx.strokeStyle="#D32020";
+ctx.lineWidth=7;
 ctx.stroke();
 
-ctx.fillStyle="#D32020";
-ctx.font="bold 28px Arial";
-ctx.fillText("ختم رسمي",980,875);
+ctx.beginPath();
+ctx.arc(980,870,80,0,Math.PI*2);
 
-ctx.fillStyle="#0B6B3A";
-ctx.fillText("عبسان الجديدة",980,915);
-
-// التواقيع
+ctx.strokeStyle="#0B6B3A";
+ctx.lineWidth=4;
+ctx.stroke();
 
 ctx.fillStyle="#000";
-ctx.font="bold 34px Arial";
+ctx.font="bold 22px Arial";
+ctx.fillText("ختم رسمي",980,855);
+
+ctx.fillStyle="#0B6B3A";
+ctx.fillText("عبسان الجديدة",980,895);
+
+// خط سفلي
+ctx.strokeStyle="#0B6B3A";
+ctx.lineWidth=2;
+
+ctx.beginPath();
+ctx.moveTo(320,1030);
+ctx.lineTo(880,1030);
+ctx.stroke();
+
+// تواقيع
+ctx.fillStyle="#000";
+ctx.font="bold 32px Arial";
 
 ctx.fillText(
 "لجنة أبناء عبسان الجديدة",
 240,
-1060
+1080
 );
 
 ctx.fillText(
 "وثيقة الوفاء",
 960,
-1060
+1080
 );
 
-// زخرفة بسيطة
+// شعار صغير بالأسفل
+ctx.fillStyle="#0B6B3A";
+ctx.font="bold 38px Arial";
+ctx.fillText("عبسان الجديدة",600,1080);
 
-ctx.strokeStyle="#0B6B3A";
-ctx.lineWidth=2;
+ctx.fillStyle="#D32020";
+ctx.font="28px Arial";
+ctx.fillText("وفاء • انتماء • هوية",600,1120);
 
-ctx.beginPath();
-ctx.moveTo(350,1100);
-ctx.lineTo(850,1100);
-ctx.stroke();
+};
 
-  }
+logo.src =
+"https://raw.githubusercontent.com/aboodalda/abasan-certificate/main/FB_IMG_1780833976315.jpg";
+
+}
 
 
 window.downloadImage=function(){
