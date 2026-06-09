@@ -117,7 +117,9 @@ border-radius:8px;
 <button onclick="downloadImage()">
 تحميل الوثيقة
 </button>
-
+<button onclick="shareCertificate()">
+📲 شارك الوثيقة
+</button>
 </div>
 
 <div id="people"></div>
@@ -214,7 +216,7 @@ ctx.fillText("تُمنح هذه الوثيقة اعتزازاً بانتمائه
 
 ctx.fillStyle="#C9A227";
 ctx.font="bold 52px Arial";
-ctx.fillText("AB-"+String(number).padStart(6,"0"),600,860);
+ctx.fillText("ABASAN-"+String(number).padStart(6,"0"),600,860);
 
 ctx.fillStyle="#000";
 ctx.font="36px Arial";
@@ -287,7 +289,20 @@ collection(db,"certificates"),
 orderBy("number","desc"),
 limit(5)
 );
+function shareCertificate(){
 
+const text =
+"أصدرت وثيقة الوفاء لبلدة عبسان الجديدة 🇵🇸\n\nسجل اسمك الآن:";
+
+const url =
+"https://aboodalda.github.io/abasan-certificate/";
+
+window.open(
+`https://wa.me/?text=${encodeURIComponent(text+"\n"+url)}`
+);
+
+}
+  
 const snapshot = await getDocs(q);
 
 const allDocs = await getDocs(collection(db,"certificates"));
