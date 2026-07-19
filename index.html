@@ -402,38 +402,41 @@ encodeURIComponent(text + "\n" + url)
 );
 
 };
-async function loadPeople(){
+async function loadRecent() {
+  const q = query(collection(db, "certificates"), orderBy("number", "desc"), limit(6));
+  const snap = await getDocs(q);
+  const all = await getDocs(collection(db, "certificates"));
+  document.getElementById("count").textContent = all.size;
 
-const q = query(
-collection(db,"certificates"),
-orderBy("number","desc"),
-limit(5)
-);
+  let pinnedHtml = "";
+  let html = "";
 
-  
-const snapshot = await getDocs(q);
+  snap.forEach(doc => {
+    const d = doc.data();
+    const serial = "ABASAN-" + String(d.number).padStart(4, "0");
+    if (d.pinned) {
+      pinnedHtml = `
+        <div class="recent-item" style="border:1px solid rgba(184,134,11,.3);border-radius:8px;padding:10px;margin-bottom:8px;background:rgba(184,134,11,.05);">
+          <span class="badge" style="background:rgba(184,134,11,.3);">📌 ${serial}</span>
+          <span style="color:var(--gold-light);font-weight:700;">${d.name}</span>
+        </div>`;
+    } else {
+      html += `
+        <div class="recent-item">
+          <span class="badge">${serial}</span>
+          <span>${d.name}</span>
+        </div>`;
+    }
+  });
 
-const allDocs = await getDocs(collection(db,"certificates"));
-document.getElementById("count").textContent = allDocs.size;
-let html = "<h2>آخر 5 وثائق صادرة</h2>";
+  if (!pinnedHtml && !html) {
+    html = `<div class="recent-item" style="justify-content:center;color:rgba(255,255,255,.2);font-size:13px;">لا توجد وثائق بعد</div>`;
+  }
 
-snapshot.forEach(doc=>{
-
-const d = doc.data();
-
-html += `
-<div class="person">
-🏅 ${d.number} - ${d.name}
-</div>
-`;
-
-});
-
-document.getElementById("people").innerHTML = html;
-
+  document.getElementById("recent-list").innerHTML = pinnedHtml + html;
 }
 
-loadPeople();
+loadRecent();
 
   
 
