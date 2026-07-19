@@ -403,40 +403,50 @@ encodeURIComponent(text + "\n" + url)
 
 };
 async function loadRecent() {
-  const q = query(collection(db, "certificates"), orderBy("number", "desc"), limit(6));
-  const snap = await getDocs(q);
   const all = await getDocs(collection(db, "certificates"));
   document.getElementById("count").textContent = all.size;
 
+  // جلب الوثيقة المثبتة
   let pinnedHtml = "";
+  let pinnedDoc = null;
+  all.forEach(doc => {
+    if (doc.data().pinned === true) pinnedDoc = doc.data();
+  });
+
+  if (pinnedDoc) {
+    const serial = "ABASAN-" + String(pinnedDoc.number).padStart(4, "0");
+    pinnedHtml = `
+      <div class="recent-item" style="border:1px solid rgba(184,134,11,.4);border-radius:8px;padding:10px;margin-bottom:8px;background:rgba(184,134,11,.08);">
+        <span class="badge" style="background:rgba(184,134,11,.3);">📌 ${serial}</span>
+        <span style="color:var(--gold-light);font-weight:700;">${pinnedDoc.name}</span>
+      </div>`;
+  }
+
+  // جلب آخر 5 وثائق غير مثبتة
+  const q = query(collection(db, "certificates"), orderBy("number", "desc"), limit(10));
+  const snap = await getDocs(q);
   let html = "";
+  let count = 0;
 
   snap.forEach(doc => {
     const d = doc.data();
+    if (d.pinned) return;
+    if (count >= 5) return;
     const serial = "ABASAN-" + String(d.number).padStart(4, "0");
-    if (d.pinned) {
-      pinnedHtml = `
-        <div class="recent-item" style="border:1px solid rgba(184,134,11,.3);border-radius:8px;padding:10px;margin-bottom:8px;background:rgba(184,134,11,.05);">
-          <span class="badge" style="background:rgba(184,134,11,.3);">📌 ${serial}</span>
-          <span style="color:var(--gold-light);font-weight:700;">${d.name}</span>
-        </div>`;
-    } else {
-      html += `
-        <div class="recent-item">
-          <span class="badge">${serial}</span>
-          <span>${d.name}</span>
-        </div>`;
-    }
+    html += `
+      <div class="recent-item">
+        <span class="badge">${serial}</span>
+        <span>${d.name}</span>
+      </div>`;
+    count++;
   });
 
-  if (!pinnedHtml && !html) {
+  if (!html) {
     html = `<div class="recent-item" style="justify-content:center;color:rgba(255,255,255,.2);font-size:13px;">لا توجد وثائق بعد</div>`;
   }
 
   document.getElementById("recent-list").innerHTML = pinnedHtml + html;
 }
-
-loadRecent();
 
   
 
